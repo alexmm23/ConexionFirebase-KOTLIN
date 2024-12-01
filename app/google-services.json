@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "534115772528",
+    "project_id": "conexionfirebase-b90fb",
+    "storage_bucket": "conexionfirebase-b90fb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534115772528:android:a27de3d489aaf76219ecb5",
+        "android_client_info": {
+          "package_name": "com.example.conexionfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534115772528-kkg4lal00n8lj92q50sbsufss5u8g1u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEvk7jQ9MY-qBObpWtftS8o86y2jYy7Vw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534115772528-kkg4lal00n8lj92q50sbsufss5u8g1u9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
