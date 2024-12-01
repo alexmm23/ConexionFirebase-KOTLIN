@@ -3,7 +3,6 @@ package com.example.conexionfirebase
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,19 +26,9 @@ class ContactListActivity : AppCompatActivity() {
         contactAdapter = ContactAdapter(contactList)
         recyclerView.adapter = contactAdapter
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            val userId = currentUser.uid
-
-            database = FirebaseDatabase
-                .getInstance("https://conexionfirebase-b90fb-default-rtdb.firebaseio.com/")
-                .getReference("users")
-                .child("contacts")
-            fetchContacts()
-        } else {
-            Toast.makeText(this, "Usuario no autenticado.", Toast.LENGTH_SHORT).show()
-            finish()
-        }
+        database = FirebaseDatabase
+                .getInstance("https://conexionfirebase-b90fb-default-rtdb.firebaseio.com/").reference.child("users")
+        fetchContacts()
     }
 
     private fun fetchContacts() {
@@ -47,23 +36,24 @@ class ContactListActivity : AppCompatActivity() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 contactList.clear()
-                Log.d("ContactListActivity", "Contact count: ${snapshot.childrenCount}")
-                for (contactSnapshot in snapshot.children) {
-                    Log.d("ContactListActivity", "Contact key: ${contactSnapshot.value}")
-                    val name = contactSnapshot.value.toString()
-                    val phone = contactSnapshot.child("phone").getValue(Int::class.java) ?: 0
-                    val contact = Contact(name,phone)
-                    Log.d("ContactListActivity", "Contact: $contact")
-                    if (contact != null) {
-                        contactList.add(contact)
+                Log.d("ContactListActivity", "User count: ${snapshot.childrenCount}")
+                for (userSnapshot in snapshot.children) {
+                    val email = userSnapshot.child("email").getValue(String::class.java)
+                    if (email != null) {
+                        contactList.add(
+                            Contact(
+                                email = email,
+                                name = email.substring(0, email.indexOf('@')),
+                                phone = userSnapshot.child("phone").getValue(Int::class.java) ?: 0
+                            )
+                        )
                     }
                 }
-                // Actualizar la lista de contactos
                 contactAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@ContactListActivity, "Error al cargar contactos: ${error.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ContactListActivity, "Error loading users: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

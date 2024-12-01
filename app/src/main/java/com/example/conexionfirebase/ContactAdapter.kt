@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-data class Contact(val name: String, val phone: Int)
+data class Contact(val name: String, val phone: Int, val email: String)
 
 class ContactAdapter(private val contactList: List<Contact>) :
     RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
@@ -22,8 +22,8 @@ class ContactAdapter(private val contactList: List<Contact>) :
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = contactList[position]
-        holder.tvName.text = contact.name
-        holder.tvPhone.text = contact.phone.toString()
+        holder.tvName.text = contact.email
+        holder.tvPhone.text = contact.name
     }
 
     override fun getItemCount(): Int {
